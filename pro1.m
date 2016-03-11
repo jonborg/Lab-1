@@ -10,6 +10,7 @@ for i=1:6
     sin_check(sin(teta(i)),i);
     sin_check(cos(teta(i)),i);
 end
+
 R01=[cos(teta(1)) -sin(teta(1)) 0; sin(teta(1)) cos(teta(1)) 0; 0 0 1]; %rotação em torno de z
 T01=[R01 zeros(3,1);0 0 0 1];
 dof(:,1)=[0 0 0 1]';
