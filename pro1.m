@@ -8,7 +8,7 @@ function [pose] = pro1(teta)
 %   figure1 in the lab assignment 
 
 R01=[cos(teta(1)) -sin(teta(1)) 0; sin(teta(1)) cos(teta(1)) 0; 0 0 1]; %rotação em torno de z
-T01=[R01 zeros(3,1);0 0 0 1]
+T01=[R01 zeros(3,1);0 0 0 1];
 dof(:,1)=[0 0 0 1]';
 
 R12=[1 0 0; 0 cos(teta(2)) -sin(teta(2)); 0 sin(teta(2)) cos(teta(2))]; %rotação em torno de x
@@ -34,7 +34,8 @@ dof(:,5)=T01*T12*T23*T34*T45*[0 0 0 1]';
 R56=[cos(teta(6)) 0 sin(teta(6)); 0 1 0; -sin(teta(6)) 0 cos(teta(6))]; %rotação em torno de y
 P56=[0 20*10^-3 0]'; %ampliado para testes
 T56=[R56 P56;0 0 0 1];
-dof(:,6)=T01*T12*T23*T34*T45*T56*[0 0 0 1]'
+dof(:,6)=T01*T12*T23*T34*T45*T56*[0 0 0 1]';
+T06=T01*T12*T23*T34*T45*T56;
 
 plot3(dof(1,:),dof(2,:),dof(3,:),'Marker','o');
 title('Robot Arm');
@@ -44,7 +45,16 @@ zlabel('z');
 axis([-0.3 0.4 -0.3 0.4 -0.3 0.4]);
 
 
-pose=[dof(21),dof(22),dof(23)]
+beta=atan2(sqrt((T06(1,3))^2+(T06(2,3))^2),T06(3,3));
+if(sin(beta)>0)
+    gama=atan2(T06(3,2),-T06(3,1));
+    alpha=atan2(T06(2,3),T06(1,3));
+else
+    gama=atan2(-T06(3,2),T06(3,1));
+    alpha=atan2(-T06(2,3),-T06(1,3));
+end
+
+pose=[T06(1,4),T06(2,4),T06(3,4),alpha,beta,gama];
 
 end
 
