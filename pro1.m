@@ -1,12 +1,15 @@
 function [pose] = pro1(teta)
-%pro1 : Computes the pose of the hand of a 6-dof arm-robot (should do it...)
+%   pro1 : Computes the pose of the hand of a 6-dof arm-robot
 %   Receives variable teta of dimensions [1 6] and using moving axes
 %   rotation matrixes, returns vector pose of imensions [1 6] that gives
 %   (x,y,z,alpha,beta,gamma) parameters of the hand
 %
 %   teta=[0 pi/4 -pi/4 0 0 anything] should give a similar position to the
 %   figure1 in the lab assignment 
-
+for i=1:6
+    sin_check(sin(teta(i)),i);
+    sin_check(cos(teta(i)),i);
+end
 R01=[cos(teta(1)) -sin(teta(1)) 0; sin(teta(1)) cos(teta(1)) 0; 0 0 1]; %rotação em torno de z
 T01=[R01 zeros(3,1);0 0 0 1];
 dof(:,1)=[0 0 0 1]';
