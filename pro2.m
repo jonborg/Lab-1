@@ -8,8 +8,8 @@ Rzyx=[cos(pose(4))*cos(pose(5)) cos(pose(4))*sin(pose(5))*sin(pose(6))-sin(pose(
 P=[pose(1) pose(2) pose(3)]';
 Tbt=[Rzyx P;0 0 0 1];
 
-theta11=atan2(pose(2),pose(1))
-theta12=atan2(pose(2),pose(1))-pi
+theta11=atan2(pose(2),pose(1));
+theta12=atan2(pose(2),pose(1))-pi;
 
 K1= ((pose(1)^2)*(cos(theta11)^2)+(pose(3)-0.099)^2-0.12^2-0.04^2-0.195^2)/(2*0.12);
 K2= ((pose(1)^2)*(cos(theta12)^2)+(pose(3)-0.099)^2-0.12^2-0.04^2-0.195^2)/(2*0.12);
@@ -18,11 +18,11 @@ if(0.04^2+0.195^2-K1^2 > 0)
     theta311=atan2(0.04,0.195)-atan2(K1,sqrt(0.04^2+0.195^2-K1^2));
     theta312=atan2(0.04,0.195)-atan2(K1,-sqrt(0.04^2+0.195^2-K1^2));
 else
-    print('Invalid point.');
+    display('Invalid point.');
     return;
 end
-theta321=atan2(0.04,0.195)-atan2(K2,sqrt(0.04^2+0.195^2-K2^2))
-theta322=atan2(0.04,0.195)-atan2(K2,-sqrt(0.04^2+0.195^2-K2^2))
+theta321=atan2(0.04,0.195)-atan2(K2,sqrt(0.04^2+0.195^2-K2^2));
+theta322=atan2(0.04,0.195)-atan2(K2,-sqrt(0.04^2+0.195^2-K2^2));
 
 %theta2...
 
