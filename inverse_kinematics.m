@@ -5,11 +5,16 @@ function [ theta ] = inverse_kinematics( pose )
 %   matrix with the 8 possible combinations of angles (theta1,...,theta6).
 %   If the input point is invalid or if theta5 can have a value k*pi (which
 %   means there is a singularity), the output is simply the value -1.
+%   If x==y==0, there is another singularity and theta1 can have any value.
 Rzyx=[cos(pose(4))*cos(pose(5)) cos(pose(4))*sin(pose(5))*sin(pose(6))-sin(pose(4))*cos(pose(6))  cos(pose(4))*sin(pose(5))*cos(pose(6))+sin(pose(4))*sin(pose(6));
         sin(pose(4))*cos(pose(5)) sin(pose(4))*sin(pose(5))*sin(pose(6))+cos(pose(4))*cos(pose(6)) sin(pose(4))*sin(pose(5))*cos(pose(6))-cos(pose(4))*sin(pose(6)); 
         -sin(pose(5)) cos(pose(5))*sin(pose(6)) cos(pose(5))*cos(pose(6))];
 P=[pose(1) pose(2) pose(3)]';
 Tbt=[Rzyx P;0 0 0 1];
+
+if(pose(1)==0 && pose(2)==0)
+    display('Singularity, theta1 can have any value, not just the ones displayed.')
+end
 
 theta11=atan2(pose(2),pose(1));
 theta12=atan2(pose(2),pose(1))-pi;
