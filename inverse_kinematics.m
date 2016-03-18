@@ -3,6 +3,8 @@ function [ theta ] = inverse_kinematics( pose )
 %   Receives variable pose of dimensions [1 6], representing (x,y,z,alpha,beta,gamma)
 %   according to an Z-Y-X Euler angles convention and returns a [8 6]   
 %   matrix with the 8 possible combinations of angles (theta1,...,theta6).
+%   If the input point is invalid or if theta5 can have a value k*pi (which
+%   means there is a singularity), the output is simply the value -1.
 Rzyx=[cos(pose(4))*cos(pose(5)) cos(pose(4))*sin(pose(5))*sin(pose(6))-sin(pose(4))*cos(pose(6))  cos(pose(4))*sin(pose(5))*cos(pose(6))+sin(pose(4))*sin(pose(6));
         sin(pose(4))*cos(pose(5)) sin(pose(4))*sin(pose(5))*sin(pose(6))+cos(pose(4))*cos(pose(6)) sin(pose(4))*sin(pose(5))*cos(pose(6))-cos(pose(4))*sin(pose(6)); 
         -sin(pose(5)) cos(pose(5))*sin(pose(6)) cos(pose(5))*cos(pose(6))];
@@ -89,6 +91,13 @@ theta511=atan2(-(Tbt(1,3)*a11+Tbt(2,3)*b11+Tbt(3,3)*c11),Tbt(1,3)*g11+Tbt(2,3)*h
 theta512=atan2(-(Tbt(1,3)*a12+Tbt(2,3)*b12+Tbt(3,3)*c12),Tbt(1,3)*g12+Tbt(2,3)*h12+Tbt(3,3)*i12);
 theta521=atan2(-(Tbt(1,3)*a21+Tbt(2,3)*b21+Tbt(3,3)*c21),Tbt(1,3)*g21+Tbt(2,3)*h21+Tbt(3,3)*i21);
 theta522=atan2(-(Tbt(1,3)*a22+Tbt(2,3)*b22+Tbt(3,3)*c22),Tbt(1,3)*g22+Tbt(2,3)*h22+Tbt(3,3)*i22);
+
+if abs(theta511)<1e-10 || abs(theta512)<1e-10 || abs(theta521)<1e-10 || abs(theta522)<1e-10 ||...
+        abs(theta511-pi)<1e-10 || abs(theta512-pi)<1e-10 || abs(theta521-pi)<1e-10 || abs(theta522-pi)<1e-10
+    display('Singularity due to theta5 = k*pi');
+    theta=-1;
+    return;
+end
 
 j11=cos(theta511)*a11+sin(theta511)*g11;
 j12=cos(theta512)*a12+sin(theta512)*g12;
