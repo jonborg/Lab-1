@@ -147,6 +147,10 @@ theta=[theta11 theta211 theta311 theta411 theta511 theta611;
        theta11 theta212 theta312 theta412-pi -theta512 theta612-pi;
        theta12 theta221 theta321 theta421-pi -theta521 theta621-pi;
        theta12 theta222 theta322 theta422-pi -theta522 theta622-pi];
+<<<<<<< HEAD
+=======
+ 
+>>>>>>> origin/master
 for i=1:48
     while theta(i)<-pi
         if theta(i)<-pi
