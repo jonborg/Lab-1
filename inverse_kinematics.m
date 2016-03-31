@@ -99,9 +99,7 @@ theta522=atan2(-(Tbt(1,3)*a22+Tbt(2,3)*b22+Tbt(3,3)*c22),Tbt(1,3)*g22+Tbt(2,3)*h
 
 if abs(theta511)<1e-10 || abs(theta512)<1e-10 || abs(theta521)<1e-10 || abs(theta522)<1e-10 ||...
         abs(theta511-pi)<1e-10 || abs(theta512-pi)<1e-10 || abs(theta521-pi)<1e-10 || abs(theta522-pi)<1e-10
-    display('Singularity due to theta5 = k*pi');
-    theta=-1;
-    return;
+    display('Singularity due to theta5 = k*pi, theta4 and theta6 are not independent and have multiple solutions.');
 end
 
 j11=cos(theta511)*a11+sin(theta511)*g11;
@@ -147,7 +145,6 @@ theta=[theta11 theta211 theta311 theta411 theta511 theta611;
        theta11 theta212 theta312 theta412-pi -theta512 theta612-pi;
        theta12 theta221 theta321 theta421-pi -theta521 theta621-pi;
        theta12 theta222 theta322 theta422-pi -theta522 theta622-pi];
-
 for i=1:48
     while theta(i)<-pi
         if theta(i)<-pi
